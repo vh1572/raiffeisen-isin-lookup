@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Raiffeisen ISIN Lookup</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="page">
+      <header class="header">
+        <div>
+          <p class="eyebrow">Structured products</p>
+          <h1>ISIN product lookup</h1>
+          <p class="subtitle">
+            ISINs are read from <code id="isins-file">data/products.csv</code> and looked up via the
+            <a href="https://structuredproducts.raiffeisen.ch/website-api/" target="_blank" rel="noreferrer">Raiffeisen website API</a>.
+            Edit that file, then click reload to re-scan.
+            <strong>Coupon&nbsp;P.A.</strong> is inferred from the full nominal coupon schedule and tenor (~ total scheduled coupons&nbsp;÷&nbsp;years).
+            <strong>Paid coupons</strong> is cash coupons already paid as a % of nominal.
+          </p>
+        </div>
+      </header>
+
+      <section class="panel controls-panel">
+        <div class="actions">
+          <button type="button" id="reload-btn" class="btn primary">Reload &amp; scan</button>
+        </div>
+        <p id="isin-count" class="isin-count"></p>
+        <p id="status" class="status" aria-live="polite"></p>
+      </section>
+
+      <section class="panel results-panel hidden" id="results-panel">
+        <div class="results-header">
+          <h2>Results</h2>
+          <p id="summary" class="summary"></p>
+        </div>
+        <div class="table-wrap">
+          <table id="results-table">
+            <thead>
+              <tr id="results-header-row"></tr>
+            </thead>
+            <tbody id="results-body"></tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+    <script src="/app.js" type="module"></script>
+  </body>
+</html>

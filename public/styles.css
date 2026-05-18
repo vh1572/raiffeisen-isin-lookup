@@ -1,0 +1,293 @@
+:root {
+  --bg: #f4f6f8;
+  --panel: #ffffff;
+  --text: #1a2332;
+  --muted: #5c6b7a;
+  --accent: #c8102e;
+  --accent-dark: #9e0c24;
+  --border: #d9e1ea;
+  --error-bg: #fff4f4;
+  --error-text: #9b1c1c;
+  --barrier-hit-bg: #fff4e5;
+  --barrier-hit-bg-hover: #ffecd0;
+  --shadow: 0 12px 40px rgba(26, 35, 50, 0.08);
+  font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+  color: var(--text);
+  background: radial-gradient(circle at top left, #fff 0%, var(--bg) 55%);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+}
+
+.page {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 2.5rem clamp(0.75rem, 2vw, 1.5rem) 4rem;
+}
+
+.header {
+  margin-bottom: 1.5rem;
+}
+
+.eyebrow {
+  margin: 0 0 0.35rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 0.75rem;
+  color: var(--accent);
+  font-weight: 700;
+}
+
+h1 {
+  margin: 0 0 0.5rem;
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  line-height: 1.1;
+}
+
+.subtitle {
+  margin: 0;
+  max-width: 52rem;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.subtitle a {
+  color: var(--accent);
+}
+
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+  padding: 1.5rem;
+}
+
+.controls-panel {
+  margin-bottom: 1.25rem;
+}
+
+.isin-count {
+  margin: 0.75rem 0 0;
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.btn {
+  border: none;
+  border-radius: 999px;
+  padding: 0.7rem 1.2rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.12s ease, background 0.12s ease;
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btn.primary {
+  background: var(--accent);
+  color: #fff;
+}
+
+.btn.primary:hover:not(:disabled) {
+  background: var(--accent-dark);
+}
+
+.btn.secondary {
+  background: #eef2f6;
+  color: var(--text);
+}
+
+.status {
+  min-height: 1.4rem;
+  margin: 1rem 0 0;
+  color: var(--muted);
+}
+
+.status.error {
+  color: var(--error-text);
+}
+
+.hidden {
+  display: none;
+}
+
+.results-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.5rem 1rem;
+  margin-bottom: 1rem;
+}
+
+.results-header h2 {
+  margin: 0;
+}
+
+.summary {
+  margin: 0;
+  color: var(--muted);
+}
+
+.table-wrap {
+  width: 100%;
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: collapse;
+  font-size: 0.92rem;
+}
+
+th,
+td {
+  padding: 0.75rem 0.65rem;
+  border-bottom: 1px solid var(--border);
+  text-align: left;
+  vertical-align: top;
+}
+
+th {
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+th:nth-child(1),
+td:nth-child(1) {
+  width: 9%;
+}
+
+th:nth-child(2),
+td:nth-child(2) {
+  width: 28%;
+}
+
+td.underlyings {
+  font-size: 0.86rem;
+  line-height: 1.45;
+  word-wrap: break-word;
+}
+
+th:nth-child(3),
+td:nth-child(3) {
+  width: 8%;
+}
+
+th:nth-child(4),
+td:nth-child(4) {
+  width: 6%;
+}
+
+th:nth-child(5),
+td:nth-child(5) {
+  width: 7%;
+}
+
+th:nth-child(6),
+td:nth-child(6) {
+  width: 8%;
+}
+
+th:nth-child(7),
+td:nth-child(7) {
+  width: 10%;
+}
+
+th:nth-child(8),
+td:nth-child(8) {
+  width: 11%;
+}
+
+th:nth-child(9),
+td:nth-child(9) {
+  width: 7%;
+}
+
+th.sortable {
+  cursor: pointer;
+  user-select: none;
+}
+
+th.sortable:hover {
+  color: var(--text);
+}
+
+th.sortable.sorted {
+  color: var(--accent);
+}
+
+tbody tr:hover {
+  background: #fafbfc;
+}
+
+tbody tr.row-barrier-hit td {
+  background: var(--barrier-hit-bg);
+}
+
+tbody tr.row-barrier-hit:hover td {
+  background: var(--barrier-hit-bg-hover);
+}
+
+.row-error td {
+  background: var(--error-bg);
+}
+
+.mono {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.86rem;
+}
+
+.numeric {
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.muted {
+  color: var(--muted);
+}
+
+.link {
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.link:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 720px) {
+  .page {
+    padding-top: 1.5rem;
+  }
+
+  th:nth-child(n + 6),
+  td:nth-child(n + 6):not(:last-child) {
+    display: none;
+  }
+}
