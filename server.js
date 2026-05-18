@@ -5,6 +5,7 @@ import { fileURLToPath } from "url";
 import { parseIsinsFromCsv } from "./lib/csv.js";
 import { lookupIsins } from "./lib/api.js";
 import { summarizeLookupResults } from "./lib/extract.js";
+import { scanBrcProducts } from "./lib/brcScan.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const app = express();
@@ -46,6 +47,32 @@ app.get("/api/isins", (_req, res) => {
   } catch (error) {
     res.status(400).json({
       error: error instanceof Error ? error.message : "Failed to read ISIN file",
+    });
+  }
+});
+
+app.post("/api/brc-scan", async (req, res) => {
+  try {
+    const body = req.body ?? {};
+    const maturityDays = Number(body.maturityDays);
+    const bidMin = Number(body.bidMin);
+    const bidMax = Number(body.bidMax);
+
+    const result = await scanBrcProducts({
+      ...API_OPTIONS,
+      maturityDays: Number.isFinite(maturityDays) ? maturityDays : undefined,
+      bidMin: Number.isFinite(bidMin) ? bidMin : undefined,
+      bidMax: Number.isFinite(bidMax) ? bidMax : undefined,
+    });
+
+    res.json({
+      ...result,
+      options: API_OPTIONS,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      error: error instanceof Error ? error.message : "BRC scan failed",
     });
   }
 });

@@ -16,8 +16,9 @@
             ISINs are read from <code id="isins-file">data/products.csv</code> and looked up via the
             <a href="https://structuredproducts.raiffeisen.ch/website-api/" target="_blank" rel="noreferrer">Raiffeisen website API</a>.
             Edit that file, then click reload to re-scan.
+            <a href="/brc.html" class="nav-link">BRC scanner →</a>
             <strong>Coupon&nbsp;P.A.</strong> is inferred from the full nominal coupon schedule and tenor (~ total scheduled coupons&nbsp;÷&nbsp;years).
-            <strong>Paid coupons</strong> is cash coupons already paid as a % of nominal.
+            <strong>% vs fix</strong> = spot vs initial fixing.
           </p>
         </div>
       </header>
@@ -26,6 +27,7 @@
         <div class="actions">
           <button type="button" id="reload-btn" class="btn primary">Reload &amp; scan</button>
         </div>
+        <p id="reload-timer" class="reload-timer" aria-live="polite"></p>
         <p id="isin-count" class="isin-count"></p>
         <p id="status" class="status" aria-live="polite"></p>
       </section>
