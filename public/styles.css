@@ -290,7 +290,7 @@ td:nth-child(8) {
 
 th:nth-child(9),
 td:nth-child(9) {
-  width: 6%;
+  width: 8%;
 }
 
 th:nth-child(10),
@@ -300,6 +300,11 @@ td:nth-child(10) {
 
 th:nth-child(11),
 td:nth-child(11) {
+  width: 6%;
+}
+
+th:nth-child(12),
+td:nth-child(12) {
   width: 7%;
 }
 
@@ -362,8 +367,8 @@ tbody tr.row-barrier-hit:hover td {
     padding-top: 1.5rem;
   }
 
-  th:nth-child(n + 8),
-  td:nth-child(n + 8):not(:last-child) {
+  th:nth-child(n + 9),
+  td:nth-child(n + 9):not(:last-child) {
     display: none;
   }
 }

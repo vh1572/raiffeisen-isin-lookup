@@ -1,3 +1,10 @@
+import {
+  bidPercentSortValue,
+  formatBidPercent,
+  formatFractionPercent,
+  fractionPercentSortValue,
+} from "./format.js";
+
 const scanBtn = document.getElementById("scan-btn");
 const statusEl = document.getElementById("status");
 const maturityDaysEl = document.getElementById("maturity-days");
@@ -17,6 +24,7 @@ const COLUMNS = [
   { key: "currency", label: "CCY", sortable: true },
   { key: "barrierLevel", label: "Barrier", sortable: true },
   { key: "maturity", label: "Maturity", sortable: true },
+  { key: "nextAutocallObservation", label: "Next obs.", sortable: true },
   { key: "bid", label: "Bid", sortable: true },
   { key: "paidCoupons", label: "Paid %", sortable: true },
   { key: "bidPlusPaidCoupons", label: "Bid + paid", sortable: true },
@@ -66,17 +74,14 @@ function renderUnderlyingStack(details, formatLine) {
 function formatCell(value, key) {
   if (value == null || value === "") return "—";
   if (
-    (key === "paidCoupons" ||
-      key === "couponPa" ||
-      key === "bidPlusPaidCoupons") &&
-    typeof value === "number"
+    key === "paidCoupons" ||
+    key === "couponPa" ||
+    key === "bidPlusPaidCoupons"
   ) {
-    const pct = value > 1 ? value : value * 100;
-    return `${pct.toFixed(2)}%`;
+    return formatFractionPercent(value);
   }
-  if (key === "bid" && typeof value === "number") {
-    const pct = value > 1 ? value : value * 100;
-    return `${pct.toFixed(2)}%`;
+  if (key === "bid") {
+    return formatBidPercent(value);
   }
   return String(value);
 }
@@ -88,17 +93,19 @@ function sortValue(product, key) {
   const raw = product[key];
   if (raw == null || raw === "") return null;
 
+  if (key === "bid") {
+    return bidPercentSortValue(Number(raw));
+  }
+
   if (
-    key === "bid" ||
     key === "paidCoupons" ||
     key === "couponPa" ||
     key === "bidPlusPaidCoupons"
   ) {
-    const n = Number(raw);
-    return Number.isNaN(n) ? null : n;
+    return fractionPercentSortValue(Number(raw));
   }
 
-  if (key === "maturity") {
+  if (key === "maturity" || key === "nextAutocallObservation") {
     const t = Date.parse(raw);
     return Number.isNaN(t) ? null : t;
   }
@@ -178,7 +185,7 @@ function renderProducts() {
       row.classList.add("row-error");
       row.innerHTML = `
         <td class="mono">${product.isin}</td>
-        <td colspan="10">${product.error}</td>
+        <td colspan="11">${product.error}</td>
       `;
     } else {
       const details = product.underlyingDetails ?? [];
@@ -191,6 +198,7 @@ function renderProducts() {
         <td>${formatCell(product.currency)}</td>
         <td>${formatCell(product.barrierLevel)}</td>
         <td>${formatCell(product.maturity)}</td>
+        <td>${formatCell(product.nextAutocallObservation)}</td>
         <td class="numeric">${formatCell(product.bid, "bid")}</td>
         <td class="numeric">${formatCell(product.paidCoupons, "paidCoupons")}</td>
         <td class="numeric">${formatCell(product.bidPlusPaidCoupons, "bidPlusPaidCoupons")}</td>
